@@ -16,7 +16,7 @@
  * @version <code style=color:green>{@value application.package_info#Version}</code>
  * @author <code style=color:blue>{@value application.package_info#Author}</code>
  */
-module ordering.system {
+module Ordering_System {
 
     /*
      * {@code exports} makes package {@code application} accessible to other modules
