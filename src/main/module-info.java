@@ -16,13 +16,14 @@
  * @version <code style=color:green>{@value application.package_info#Version}</code>
  * @author <code style=color:blue>{@value application.package_info#Author}</code>
  */
-module Ordering_System {
+module ordering.system {
 
     /*
      * {@code exports} makes package {@code application} accessible to other modules
      * at compile and at runtime (use {@code open} for compile-time access only).
      */
     exports application;
+    exports datamodel;
 
     /* {@code opens} makes a package accessible to tools such as the JUnit test
      * runner and the Javadoc compiler.
@@ -34,4 +35,7 @@ module Ordering_System {
      */
     requires org.junit.jupiter.api;
     requires transitive org.apache.logging.log4j;
+    requires transitive com.fasterxml.jackson.core;
+    requires transitive com.fasterxml.jackson.databind;
+    requires lombok;
 }
