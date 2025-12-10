@@ -20,7 +20,7 @@ Steps:
 
 - C1: [*Project Setup*](#1-project-setup)
 
-- C2: [*Datamodel*](#2-datamodel)
+- C2: [*Datamodel*](https://github.com/sgra64/ordering-system/tree/c1-customer)
 
 <!-- 
 - [Create a *.gitignore* - File](#3-create-a-gitignore---file)
@@ -232,7 +232,7 @@ Follow steps to setup the project:
 1. When everything works, create a new remote repository named:
     *"ordering-system"* and push branch *main* to that remote repository.
 
-
+<!-- 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 &nbsp;
@@ -240,4 +240,4 @@ Follow steps to setup the project:
 ## 2. Datamodel
 
 to follow...
-
+ -->
