@@ -10,6 +10,9 @@ These pages provide the *Javadoc* documentation for the *Ordering-System*:
     version of the project maintained in the
     [*main*](../../tree/main)-branch.
 
+- [*c2-customer (Javadoc)*](https://sgra64.github.io/ordering-system/c2-customer)
+    -- the state of the project where the *Customer*-class has been implemented
+    on branch [*c2-customer*](../../tree/c2-customer).
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <!-- 
