@@ -23,6 +23,7 @@ module Ordering_System {
      * at compile and at runtime (use {@code open} for compile-time access only).
      */
     exports application;
+    exports datamodel;
 
     /* {@code opens} makes a package accessible to tools such as the JUnit test
      * runner and the Javadoc compiler.
@@ -34,4 +35,7 @@ module Ordering_System {
      */
     requires org.junit.jupiter.api;
     requires transitive org.apache.logging.log4j;
+    requires transitive com.fasterxml.jackson.core;
+    requires transitive com.fasterxml.jackson.databind;
+    requires lombok;
 }
