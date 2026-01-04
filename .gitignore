@@ -30,8 +30,8 @@ target/
 *.uue*
 
 # ignore folders with libraries
-lib/
-libs/
+lib
+libs
 
 # ignore folders with branches
 branch/

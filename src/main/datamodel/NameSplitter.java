@@ -75,7 +75,7 @@ public interface NameSplitter {
                 new NameSplitter() {
                     // 
                     @Override public Optional<SplitName> split(String name) {
-                        return Optional.of(new SplitName(name, ""));
+                        return Optional.of(new SplitName(name, "-"));
                     }
                 }
             );

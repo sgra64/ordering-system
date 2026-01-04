@@ -1,4 +1,4 @@
-package application.runnables;
+package runnables;
 
 import java.util.*;
 import java.util.function.Function;

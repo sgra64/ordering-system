@@ -34,8 +34,8 @@ module Ordering_System {
      * External module required by this module (JUnit-5 module for JUnit testing).
      */
     requires org.junit.jupiter.api;
-    requires transitive org.apache.logging.log4j;
-    requires transitive com.fasterxml.jackson.core;
-    requires transitive com.fasterxml.jackson.databind;
+    requires org.apache.logging.log4j;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
     requires lombok;
 }
