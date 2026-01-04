@@ -12,7 +12,6 @@ public interface Runnable {
      * and {@link java.util.Properties} obtained from {@code 'application.properties'}.
      * 
      * @param context {@link ApplicationContext} passed to {@link Runnable} instance
-     * @return chainable self-reference
      */
-    Runnable run(ApplicationContext context);
+    void run(ApplicationContext context);
 }

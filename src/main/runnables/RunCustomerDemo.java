@@ -50,7 +50,7 @@ public class RunCustomerDemo implements Runnable {
      * @return chainable self-reference
      */
     @Override
-    public Runnable run(ApplicationContext context) {
+    public void run(ApplicationContext context) {
 
         final Customer eric = new Customer("Eric Meyer")
             .setId(100L)
@@ -90,8 +90,6 @@ public class RunCustomerDemo implements Runnable {
                 // .row(customers)
             .footer()
             .print(System.out);
-        // 
-        return this;
     }
 
 
