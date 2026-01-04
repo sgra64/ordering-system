@@ -1,12 +1,14 @@
 package runnables;
 
-import java.io.*;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.function.Function;
 import java.util.stream.IntStream;
-
-import lombok.*;
-import lombok.experimental.Accessors;
+import java.io.OutputStream;
+import java.io.IOException;
 
 /**
  * Formatter for tablular content. Content can be fitted into a table
@@ -52,8 +54,6 @@ import lombok.experimental.Accessors;
  * </pre>
  * Uses {@code lombok's @Builder} pattern.
  */
-@Builder
-@AllArgsConstructor
 public class TableFormatter {
 
     /**
@@ -91,32 +91,68 @@ public class TableFormatter {
      */
     private final StringBuilder sb = new StringBuilder();
 
+    TableFormatter(List<Column> columns, Map<Class<?>, Function<Object, String[]>> rowMappers,
+        Map<Class<?>, Function<Object, String[][]>> multiRowMappers)
+    {
+        this.columns = columns;
+        this.rowMappers = rowMappers;
+        this.multiRowMappers = multiRowMappers;
+    }
 
     /**
-     * Format table header with column lables. Example:
+     * Static method to create {@link TableFormatterBuilder} object that
+     * constructs (builds) a {@link TableFormatter} object in multiple steps.
+     * @return {@link TableFormatterBuilder} object
+     */
+    public static TableFormatterBuilder builder() {
+        return new TableFormatterBuilder();
+    }
+
+    /**
+     * Format table header with column header labels. If none are provided,
+     * {@code "{label}"} is used for all columns.
+     * Example:
      * <pre>
      * +------+----------------+----------------+------------------------+
      * |   ID | NAME           | FIRSTNAME      | CONTACT                |
      * +------+----------------+----------------+------------------------+
      * </pre>
+     * @param labels column labels to appear in order in header
      * @return chainable self-reference
      */
-    public TableFormatter header() {
-        return line().row(
-                // create all-columns args[] with: ["{label}", "{label}", ...]
-                IntStream.range(0, columns.size()).boxed().map(i -> "{label}").toArray(String[]::new)
-            ).line();
+    public TableFormatter header(String... labels) {
+        labels = labels.length > 0? labels :
+            IntStream.range(0, columns.size()).boxed().map(i -> "{label}").toArray(String[]::new);
+        // 
+        return line().row(labels).line();
     }
 
     /**
-     * Format table footer with closing line. Example:
+     * Format table footer with closing line and optional additional text
+     * appended after the horizontal line, e.g. "(20 items)" appended in
+     * the example:
      * <pre>
      * +------+----------------+----------------+------------------------+
+     * (20 items)
      * </pre>
+     * @param addText optional, additional text after horizontal line
      * @return chainable self-reference
      */
-    public TableFormatter footer() {
-        return line();
+    public TableFormatter footer(String... addText) {
+        return line().text(addText);
+    }
+
+    /**
+     * Insert plain text without table formatting.
+     * @param text plain text to insert into table
+     * @return chainable self-reference
+     */
+    public TableFormatter text(String... text) {
+        for(String t : text) {
+            sb.append(t);
+        }
+        sb.append("\n");
+        return this;
     }
 
     /**
@@ -194,7 +230,8 @@ public class TableFormatter {
      * {@code Markers} can prepend values:
      * <ul>
      * <li>value: {@code "{label}"} format cell with column label with separators,</li>
-     * <li>value: {@code "{---}"} fill cell as dashed-line with {@code "+"} separators,</li>
+     * <li>value: {@code "{---}"} or {@code "{===}"} fill cell as dash or double-dash line
+     *                                                  with {@code "+"} separators,</li>
      * <li>value: {@code "{R}text"} format cell with right alignment with no separators,</li>
      * <li>value: {@code "{R }text"} format cell with right alignment with separators,</li>
      * <li>value: {@code "{L}text"}, {@code "{L }text"} accordingly with left alignment.</li>
@@ -209,10 +246,10 @@ public class TableFormatter {
             final var w = col.width();
             final var fill = " ";
             final String value = i < values.length && values[i] != null? values[i] : "";
-            String val = value;                     // mutable value
-            var lmarg = col.lmarg();                // mutable left-margin
-            var rmarg = col.rmarg();                // mutable right-margin
-            var orientation = col.orientation();    // mutable cell orientation
+            String val = value;                     // cell value
+            var lmarg = col.lmarg();                // left-margin
+            var rmarg = col.rmarg();                // right-margin
+            var alignment = col.alignment();        // cell alignment
             var sep = psep.equals("+")? "+" : String.valueOf(col.sep());
             sep = psep.equals(" ") && val.length()==0? " " : sep;
             psep = "";  // separator of previous column
@@ -226,13 +263,13 @@ public class TableFormatter {
                         val = "";   // empty line
                     } else {
                         if("label".equals(marker)) { val = col.label(); }
-                        if("---".equals(marker) || "+".equals(marker)) {
+                        if("---".equals(marker) || "===".equals(marker) || "+".equals(marker)) {
                             lmarg = rmarg = 0;
                             psep = sep = "+";
-                            val = marker.charAt(0)=='+'? "" : "-".repeat(w);
+                            val = marker.charAt(0)=='+'? "" : marker.substring(0, 1).repeat(w);
                         }
-                        if(marker.startsWith("L")) { orientation = 'L'; }
-                        if(marker.startsWith("R")) { orientation = 'R'; }
+                        if(marker.startsWith("L")) { alignment = 'L'; }
+                        if(marker.startsWith("R")) { alignment = 'R'; }
                         if(marker.contains(" ")) { psep = sep = " "; }
                     }
                 }
@@ -243,12 +280,12 @@ public class TableFormatter {
                 if(prev==null || prev.length()==0) { sep = " "; }
                 val = " ".repeat(w);
             }
-            if(orientation=='L') {      // cut 'val' to width
+            if(alignment=='L') {      // cut 'val' to width
                 val = val.substring(0, Math.max(0, Math.min(val.length(), w - lmarg)));
                 int pad = Math.max(0, w - sep.length() - lmarg - val.length() + sep.length());
                 sb.append(String.format("%s%s%s%s", sep, fill.repeat(lmarg), val, fill.repeat(pad)));
             }
-            if(orientation=='R') {      // cut 'val' to width
+            if(alignment=='R') {      // cut 'val' to width
                 int limit = Math.max(0, Math.min(val.length(), w - rmarg));
                 val = val.substring(val.length() - limit);
                 int pad = Math.max(0, w - sep.length() - rmarg - val.length() + sep.length());
@@ -262,8 +299,8 @@ public class TableFormatter {
     }
 
     /**
-     * Terminal method to print internal buffer to {@link OutputStream} and
-     * clear internal buffer.
+     * Terminal method to print internal buffer to {@link OutputStream}
+     * and clear internal buffer.
      * @param os {@link OutputStream} as destination for buffer content
      */
     public void print(OutputStream os) {
@@ -275,25 +312,37 @@ public class TableFormatter {
         }
     }
 
-
     /**
      * Inner class that describes a column (column specification).
      */
-    @Getter
-    @AllArgsConstructor
-    @Accessors(fluent=true, chain=true)
-    @ToString
     private static class Column {
-        int i; char sep; String fill; String label; int lmarg; int rmarg;
-        @Setter int width;
-        @Setter char orientation;
-        // 
+        char sep;           // column-seperator in horizontal lines: '+', '-', ' '
+        String label;       // column header label
+        int lmarg;          // left-margin in cells
+        int rmarg;          // right-margin in cells
+        int width;          // column width
+        char alignment;     // column alignment: 'R', 'L' (default)
+
         Column(int i, char sep, String label) {
-            this(i, sep, label.trim().isEmpty()? " " : "-", label.trim(),   // fill, label
-                label.length() - label.replaceAll("^\s+", "").length(),     // lmarg
-                label.length() - label.replaceAll("\s+$", "").length(),     // rmarg
-                label.length(), 'L');                                       // orientation
+            // this.i = i;
+            this.sep = sep;
+            // this.fill = label.trim().isEmpty()? " " : "-";
+            this.label = label.trim();
+            this.lmarg = label.length() - label.replaceAll("^\s+", "").length();
+            this.rmarg = label.length() - label.replaceAll("\s+$", "").length();
+            this.width = label.length();
+            this.alignment = 'L';
         }
+        char sep() { return sep; }
+        // String fill() { return fill; }
+        String label() { return label; }
+        int lmarg() { return lmarg; }
+        int rmarg() { return rmarg; }
+        int width() { return width; }
+        char alignment() { return alignment; }
+
+        void width(int width) { this.width = width; }
+        void alignment(char alignment) { this.alignment = alignment; }
     };
 
     /**
@@ -344,13 +393,13 @@ public class TableFormatter {
 
         /**
          * Define column alignments (L: left-aligned, R: right-aligned),
-         * e.g. with {@code .orientation("RLL")}.
+         * e.g. with {@code .alignment("RLL")}.
          * @param alignments column alignments
          * @return chainable self-reference
          */
         public TableFormatterBuilder alignments(String alignments) {
             for(int i=0; alignments != null && i < alignments.length() && i < columns.size(); i++) {
-                columns.get(i).orientation(alignments.charAt(i));
+                columns.get(i).alignment(alignments.charAt(i));
             }
             return this;
         }
@@ -392,6 +441,14 @@ public class TableFormatter {
                 this.multiRowMappers.put(typeToMap, (Function<Object, String[][]>) mapper);
             }
             return this;
+        }
+
+        /**
+         * Method that finalizes build-steps and constructs {@link TableFormatter} object.
+         * @return
+         */
+        public TableFormatter build() {
+            return new TableFormatter(this.columns, this.rowMappers, this.multiRowMappers);
         }
     }
 
