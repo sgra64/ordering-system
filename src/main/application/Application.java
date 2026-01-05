@@ -3,7 +3,7 @@ package application;
 import java.util.*;
 import org.apache.logging.log4j.*;
 
-import application.runnables.*;
+import runnables.*;
 
 /**
  * Class with static {@code main()}-method that starts the program.
@@ -66,6 +66,7 @@ public class Application {
                     Runnable runnable = null;
                     switch(rn) {
                         case "RunCustomerDemo": runnable = new RunCustomerDemo(); break;
+                        case "RunDatamodelDemo": runnable = new RunDatamodelDemo(); break;
                     }
                     if(runnable != null) {
                         context.log().info(String.format("executing: '%s.class'", runnable.getClass().getSimpleName()));

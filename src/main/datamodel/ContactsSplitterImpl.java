@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
+
 class ContactsSplitterImpl implements ContactsSplitter {
 
     /**
@@ -133,14 +134,14 @@ class ContactsSplitterImpl implements ContactsSplitter {
                     }
                     JsonNode jn = objectMapper.readTree(contacts);
                     if(jn.isArray()) {
-                        List<String> contactsListX = new ArrayList<>();
+                        List<String> contactsList = new ArrayList<>();
                         ArrayNode ja = (ArrayNode)jn;
                         var it = ja.iterator();
                         while(it.hasNext()) {
                             JsonNode jn2 = it.next();
-                            contactsListX.add(jn2.textValue());
+                            contactsList.add(jn2.textValue());
                         }
-                        return contactsListX;
+                        return contactsList;
                     }
                 // 
                 } catch (JsonProcessingException e) { }
