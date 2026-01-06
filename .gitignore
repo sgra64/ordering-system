@@ -4,22 +4,25 @@
 # see: https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 #------------------------------------------------------------------------------
 
-# ignore git submodule files
+# ignore git-module files
 .gitmodules
 .env/
 .vscode/
 .libs/
 
-# ignore generated directories and compiled output
+# ignore output directories with generated content
 bin/
 out/
 target/
 *.class
 
-# ignore Java packaging files, *.war, *.ear
+# ignore patch files
+*.patch
+
+# ignore Java packaging files
 *.jar
 
-# ignore other archives and encoded files
+# ignore other archives and encoding files
 *.7z
 *.gz
 *.rar
@@ -29,9 +32,9 @@ target/
 *.zip
 *.uue*
 
-# ignore folders with libraries
-lib/
-libs/
+# ignore folders with libraries (including sym-links)
+lib
+libs
 
 # ignore folders with branches
 branch/
@@ -54,10 +57,12 @@ logs/
 .iml
 .idea
 
-# ignore tmp directories and *.tmp files
+# ignore tmp directories, *.tmp and .BAK files
 tmp/
 temp/
 *.tmp
+*.BAK
+*.bak
 
-# ignore OSX system files
+# ignore OSX hidden files (Mac)
 .DS_Store
