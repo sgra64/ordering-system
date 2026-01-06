@@ -92,7 +92,7 @@ Understand the new additions and the structure of the project, specifically:
 
 - [*Runnable.java*](src/main/application/Runnable.java)
 
-- [*RunCustomerDemo.java*](src/main/application/runnables/RunCustomerDemo.java)
+- [*RunCustomerDemo.java*](src/main/runnables/RunCustomerDemo.java)
 
 - [*NameSplitter.java*](src/main/datamodel/NameSplitter.java)
 
@@ -101,6 +101,7 @@ Understand the new additions and the structure of the project, specifically:
 - [*application.properties*](src/resources/application.properties)
 
 - [*log4j2.properties*](src/resources/log4j2.properties)
+
 
 ```
 src/main
@@ -115,10 +116,15 @@ src/main/application/runnables/RunCustomerDemo.java <-- demo
 src/main/application/runnables/TableFormatter.java
 
 src/main/datamodel                                  <-- add 'Customer.java'
-src/main/datamodel/ContactsSplitter.java
-src/main/datamodel/NameSplitter.java                <-- add implementation class
-                                                    <-- 'NameSplitterImpl.java'
+src/main/datamodel/ContactsSplitter.java            <-- interface
+src/main/datamodel/ContactsSplitterImpl.java        <-- implementation class
+src/main/datamodel/NameSplitter.java                <-- add implementation class:
+...                                                 <-- 'NameSplitterImpl.java'
 src/main/module-info.java
+
+src/main/runnables                                  <-- driver classes
+src/main/runnables/RunCustomerDemo.java
+src/main/runnables/TableFormatter.java
 
 src/resources
 src/resources/application.properties                <-- application.properties
@@ -126,6 +132,10 @@ src/resources/log4j2.properties                     <-- logger configuration
 src/resources/META-INF
 src/resources/META-INF/MANIFEST.MF
 ```
+
+Commit the code-drop to branch *c2-customer* with message:
+`code-drop: se1-repo/c2-customer`.
+
 
 Answer questions:
 
@@ -135,7 +145,7 @@ Answer questions:
     [*ContactsSplitter.java*](src/main/datamodel/ContactsSplitter.java).
 
 1. Understand the *"Builder"* pattern used in
-    [*TableFormatter.java*](src/main/application/runnables/TableFormatter.java).
+    [*TableFormatter.java*](src/main/runnables/TableFormatter.java).
 
 1. What is the purpose of configuration in
     [*application.properties*](src/resources/application.properties)
@@ -147,7 +157,7 @@ Answer questions:
     [*ContactsSplitter.java*](src/main/datamodel/ContactsSplitter.java)?
 
 1. What are chainable methods, see
-    [*RunCustomerDemo.java*](src/main/application/runnables/RunCustomerDemo.java)?
+    [*RunCustomerDemo.java*](src/main/runnables/RunCustomerDemo.java)?
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -158,6 +168,31 @@ Answer questions:
 
 Implement class *Customer* in package *"datamodel"* according to:
 <img src="https://raw.githubusercontent.com/sgra64/ordering-system/refs/heads/markup/img/customer-1.png" width="660"/>
+
+Run the demo:
+
+```sh
+mk run
+```
+
+The *Customer* table should show (with no split names yet):
+
+```
++------+----------------+--------------------+----------------------------+
+|   ID | NAME           | FIRSTNAMES         | CONTACTS                   |
++------+----------------+--------------------+----------------------------+
+|  100 | Eric Meyer     | -                  | eme@gmail.com              |
+|      |                |                    | +49 030 515 141345         |
+|      |                |                    | fax: 030 234-134651        |
++------+----------------+--------------------+----------------------------+
+|  101 | Bayer, Anne    | -                  | anne24@yahoo.de            |
+|      |                |                    | (030) 3481-23352           |
++------+----------------+--------------------+----------------------------+
+|  102 | Tim Schulz-Muel| -                  | tim2346@gmx.de             |
+|  103 | Nadine-Ulla Blu| -                  | +49 152-92454              |
+|  104 | Khaled Saad Moh| -                  | +49 1524-12948210          |
++------+----------------+--------------------+----------------------------+
+```
 
 Checkout the test for *Customer*:
 
@@ -191,10 +226,8 @@ Test run finished after 436 ms
 [         0 tests failed          ]
 ```
 
-<!-- 
-src/main/datamodel/Customer.java
-src/main/datamodel/NameSplitterImpl.java
- -->
+When tests are passing, commit to branch *c2-customer* with message:
+`add Customer.java, Customer_0_BaseTests.java`.
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -203,7 +236,7 @@ src/main/datamodel/NameSplitterImpl.java
 
 ## 3. Sanitize Class *Customer*
 
-In software development, *"sanitization"* is used as chargon for hardening an
+In software development, *"sanitization"* is used as jargon for hardening an
 implementation, which means making it compliant to more detailed specifications,
 which are often given as *"sanity tests"*.
 
@@ -244,6 +277,8 @@ Test run finished after 507 ms
 [         0 tests failed          ]
 ```
 
+When tests are passing, commit to branch *c2-customer* with message:
+`sanitized Customer.java, Customer_1_SanityTests.java`.
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -258,20 +293,21 @@ and how it represents multiple customer contacts.
 Check *Customer* contacts tests and validate your implementation:
 
 ```sh
-git checkout se1-repo/c2-customer -- src/tests/datamodel/Customer_3_ContactsTests.java
+git checkout se1-repo/c2-customer -- src/tests/datamodel/Customer_2_ContactsTests.java
 ```
 ```sh
-mk run-tests -c datamodel.Customer_3_ContactsTests
+mk run-tests -c datamodel.Customer_2_ContactsTests
 ```
 ```
 ╷
 ├─ JUnit Jupiter ✔
-│  └─ Customer_3_ContactsTests ✔
-│     ├─ test_300_contact_initialization() ✔
-│     ├─ test_310_single_contact() ✔
-│     ├─ test_320_multiple_contacts() ✔
-│     ├─ test_330_out_of_bounds_contacts() ✔
-│     └─ test_321_multiple_contacts_list() ✔
+│  └─ Customer_2_ContactsTests ✔
+│     ├─ test_200_contact_initialization() ✔
+│     ├─ test_220_multiple_contacts() ✔
+│     ├─ test_210_single_contact() ✔
+│     ├─ test_230_out_of_bounds_contacts() ✔
+│     └─ test_221_multiple_contacts_list() ✔
+| 
 ├─ JUnit Vintage ✔
 └─ JUnit Platform Suite ✔
 
@@ -279,6 +315,9 @@ Test run finished after 468 ms
 [         5 tests successful      ]
 [         0 tests failed          ]
 ```
+
+When tests are passing, commit to branch *c2-customer* with message:
+`add Customer_2_ContactsTests.java`.
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -372,34 +411,35 @@ Implement all three properties of the *Singleton* pattern as in
 When you are done, check *Customer* names tests and validate your implementation:
 
 ```sh
-git checkout se1-repo/c2-customer -- src/tests/datamodel/Customer_2_NamesTests.java
+git checkout se1-repo/c2-customer -- src/tests/datamodel/Customer_3_NamesTests.java
 ```
 ```sh
-mk run-tests -c datamodel.Customer_2_NamesTests
+mk run-tests -c datamodel.Customer_3_NamesTests
 ```
 ```
 ╷
 ├─ JUnit Jupiter ✔
-│  └─ Customer_2_NamesTests ✔
-│     ├─ test_205_name_in_order_dashed_first() ✔
-│     ├─ test_221_quotes() ✔
-│     ├─ test_223_whitespaces() ✔
-│     ├─ test_210_last_name_first_comma() ✔
-│     ├─ test_230_extreme_long_names() ✔
-│     ├─ test_212_last_name_with_dash() ✔
-│     ├─ test_200_name_in_order() ✔
-│     ├─ test_211_last_name_first_semicolon() ✔
-│     ├─ test_213_last_name_with_dash() ✔
-│     ├─ test_204_name_in_order_triple_dashed_last() ✔
-│     ├─ test_206_many_names_in_order() ✔
-│     ├─ test_214_many_last_names() ✔
-│     ├─ test_207_many_names_in_order() ✔
-│     ├─ test_220_spaces() ✔
-│     ├─ test_202_name_in_order_triple_first() ✔
-│     ├─ test_222_double_quotes() ✔
-│     ├─ test_203_name_in_order_dashed_last() ✔
-│     ├─ test_209_many_names_in_order() ✔
-│     └─ test_201_name_in_order_double_first() ✔
+│  └─ Customer_3_NamesTests ✔
+│     ├─ test_307_many_names_in_order() ✔
+│     ├─ test_304_name_in_order_triple_dashed_last() ✔
+│     ├─ test_309_many_names_in_order() ✔
+│     ├─ test_305_name_in_order_dashed_first() ✔
+│     ├─ test_322_double_quotes() ✔
+│     ├─ test_321_quotes() ✔
+│     ├─ test_314_many_last_names() ✔
+│     ├─ test_323_whitespaces() ✔
+│     ├─ test_311_last_name_first_semicolon() ✔
+│     ├─ test_320_spaces() ✔
+│     ├─ test_310_last_name_first_comma() ✔
+│     ├─ test_312_last_name_with_dash() ✔
+│     ├─ test_302_name_in_order_triple_first() ✔
+│     ├─ test_313_last_name_with_dash() ✔
+│     ├─ test_330_extreme_long_names() ✔
+│     ├─ test_300_name_in_order() ✔
+│     ├─ test_306_many_names_in_order() ✔
+│     ├─ test_303_name_in_order_dashed_last() ✔
+│     └─ test_301_name_in_order_double_first() ✔
+| 
 ├─ JUnit Vintage ✔
 └─ JUnit Platform Suite ✔
 
@@ -408,6 +448,8 @@ Test run finished after 180 ms
 [         0 tests failed          ]
 ```
 
+When tests are passing, commit to branch *c2-customer* with message:
+`add NameSplitterImpl.java, Customer_3_NamesTests.java`.
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -418,10 +460,6 @@ Test run finished after 180 ms
 
 Run all *Customer* Tests 
 
-
-```sh
-git checkout se1-repo/c2-customer -- src/tests/datamodel/Customer_3_ContactsTests.java
-```
 ```sh
 mk run-tests
 ```
@@ -431,4 +469,16 @@ Test run finished after 662 ms
 [         0 tests failed          ]
 ```
 
-If all tests pass, commit your implementation to branch `c2-customer`.
+Show the commit-log of branch *c2-customer*:
+
+```
+618b273 (HEAD -> c2-customer) add NameSplitterImpl.java, Customer_3_NamesTests.java
+ffc2f55 add Customer_2_ContactsTests.java
+ea15fa2 sanitized Customer.java, Customer_1_SanityTests.java
+3a7b8ed add Customer.java, Customer_0_BaseTests.java
+7a08ef8 code-drop: se1-repo/c2-customer
+f9d1236 (tag: base, main) add src/main, src/resources, src/tests
+9c2ecf4 add .gitmodules
+e5a8c22 add .gitignore
+832c97d (tag: root) root commit (empty)
+```

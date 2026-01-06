@@ -64,8 +64,8 @@ public class Customer_1_SanityTests {
      */
     @Test @Order(120)
     public void test_120_empty_names() {
-        eric.setFirstNames("Eric"); // regular names used
         eric.setName("Meyer");
+        eric.setFirstNames("Eric"); // regular names used
         assertEquals("Eric", eric.getFirstNames());
         assertEquals("Meyer", eric.getName());
         // 
@@ -82,8 +82,8 @@ public class Customer_1_SanityTests {
      */
     @Test @Order(130)
     public void test_130_null_names() {
-        eric.setFirstNames("Eric"); // regular names used
         eric.setName("Meyer");
+        eric.setFirstNames("Eric"); // regular names used
         assertEquals("Eric", eric.getFirstNames());
         assertEquals("Meyer", eric.getName());
         // 
@@ -97,8 +97,8 @@ public class Customer_1_SanityTests {
 
     @Test @Order(131)
     public void test_131_null_firstNames() {
-        eric.setFirstNames("Eric"); // regular names used
         eric.setName("Meyer");
+        eric.setFirstNames("Eric"); // regular names used
         assertEquals("Eric", eric.getFirstNames());
         assertEquals("Meyer", eric.getName());
         // 

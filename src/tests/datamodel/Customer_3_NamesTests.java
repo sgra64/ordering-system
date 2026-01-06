@@ -8,14 +8,14 @@ import static org.junit.jupiter.api.Assertions.*;
  * as {@code single-String} names such as {@code "Eric Meyer"} or
  * {@code "Meyer, Eric"}.
  */
-public class Customer_2_NamesTests {
+public class Customer_3_NamesTests {
 
     /**
-     * Tests 200+ test single-string name as sequence of names with
+     * Tests 300+ test single-string name as sequence of names with
      * trailing last name.
      */
-    @Test @Order(200)
-    public void test_200_name_in_order() {
+    @Test @Order(300)
+    public void test_300_name_in_order() {
         final Customer eric = new Customer("Eric Meyer");
         String name = eric.getName();
         String first = eric.getFirstNames();
@@ -24,8 +24,8 @@ public class Customer_2_NamesTests {
         assertEquals("Eric", first);
     }
 
-    @Test @Order(201)
-    public void test_201_name_in_order_double_first() {
+    @Test @Order(301)
+    public void test_301_name_in_order_double_first() {
         final Customer eric = new Customer("Eric Robert Meyer");
         String name = eric.getName();
         String first = eric.getFirstNames();
@@ -34,8 +34,8 @@ public class Customer_2_NamesTests {
         assertEquals("Eric Robert", first);
     }
 
-    @Test @Order(202)
-    public void test_202_name_in_order_triple_first() {
+    @Test @Order(302)
+    public void test_302_name_in_order_triple_first() {
         final Customer eric = new Customer("Eric Robert Louis Meyer");
         String name = eric.getName();
         String first = eric.getFirstNames();
@@ -44,8 +44,8 @@ public class Customer_2_NamesTests {
         assertEquals("Eric Robert Louis", first);
     }
 
-    @Test @Order(203)
-    public void test_203_name_in_order_dashed_last() {
+    @Test @Order(303)
+    public void test_303_name_in_order_dashed_last() {
         final Customer eric = new Customer("Eric Robert Meyer-Santos");
         String name = eric.getName();
         String first = eric.getFirstNames();
@@ -54,8 +54,8 @@ public class Customer_2_NamesTests {
         assertEquals("Eric Robert", first);
     }
 
-    @Test @Order(204)
-    public void test_204_name_in_order_triple_dashed_last() {
+    @Test @Order(304)
+    public void test_304_name_in_order_triple_dashed_last() {
         final Customer eric = new Customer("Eric Robert Meyer-Santos-Ortega");
         String name = eric.getName();
         String first = eric.getFirstNames();
@@ -64,8 +64,8 @@ public class Customer_2_NamesTests {
         assertEquals("Eric Robert", first);
     }
 
-    @Test @Order(205)
-    public void test_205_name_in_order_dashed_first() {
+    @Test @Order(305)
+    public void test_305_name_in_order_dashed_first() {
         final Customer eric = new Customer("Eric-Robert Meyer-Santos-Ortega");
         String name = eric.getName();
         String first = eric.getFirstNames();
@@ -74,8 +74,8 @@ public class Customer_2_NamesTests {
         assertEquals("Eric-Robert", first);
     }
 
-    @Test @Order(206)
-    public void test_206_many_names_in_order() {
+    @Test @Order(306)
+    public void test_306_many_names_in_order() {
         final Customer khaled = new Customer("Khaled Saad Md. Abdelalim");
         String name = khaled.getName();
         String first = khaled.getFirstNames();
@@ -84,8 +84,8 @@ public class Customer_2_NamesTests {
         assertEquals("Khaled Saad Md.", first);
     }
 
-    @Test @Order(207)
-    public void test_207_many_names_in_order() {
+    @Test @Order(307)
+    public void test_307_many_names_in_order() {
         final Customer khaled = new Customer("Khaled Md. Arif Saad-Abdelalim");
         String name = khaled.getName();
         String first = khaled.getFirstNames();
@@ -94,8 +94,8 @@ public class Customer_2_NamesTests {
         assertEquals("Khaled Md. Arif", first);
     }
 
-    @Test @Order(209)
-    public void test_209_many_names_in_order() {
+    @Test @Order(309)
+    public void test_309_many_names_in_order() {
         final Customer khaled = new Customer("Khaled-Mohamed-Arif Saad-Abdelalim");
         String name = khaled.getName();
         String first = khaled.getFirstNames();
@@ -105,10 +105,10 @@ public class Customer_2_NamesTests {
     }
 
     /**
-     * Tests 210+ test single-string names starting with the last name.
+     * Tests 310+ test single-string names starting with the last name.
      */
-    @Test @Order(210)
-    public void test_210_last_name_first_comma() {
+    @Test @Order(310)
+    public void test_310_last_name_first_comma() {
         final Customer eric = new Customer("Meyer, Eric");
         String name = eric.getName();
         String first = eric.getFirstNames();
@@ -117,8 +117,8 @@ public class Customer_2_NamesTests {
         assertEquals("Eric", first);
     }
 
-    @Test @Order(211)
-    public void test_211_last_name_first_semicolon() {
+    @Test @Order(311)
+    public void test_311_last_name_first_semicolon() {
         final Customer eric = new Customer("Meyer; Eric");
         String name = eric.getName();
         String first = eric.getFirstNames();
@@ -127,8 +127,8 @@ public class Customer_2_NamesTests {
         assertEquals("Eric", first);
     }
 
-    @Test @Order(212)
-    public void test_212_last_name_with_dash() {
+    @Test @Order(312)
+    public void test_312_last_name_with_dash() {
         final Customer tim = new Customer("Schulz‐Mueller, Tim");
         String name = tim.getName();
         String first = tim.getFirstNames();
@@ -137,8 +137,8 @@ public class Customer_2_NamesTests {
         assertEquals("Tim", first);
     }
 
-    @Test @Order(213)
-    public void test_213_last_name_with_dash() {
+    @Test @Order(313)
+    public void test_313_last_name_with_dash() {
         final Customer nadine = new Customer("Blumenfeld; Nadine Ulla");
         String name = nadine.getName();
         String first = nadine.getFirstNames();
@@ -147,8 +147,8 @@ public class Customer_2_NamesTests {
         assertEquals("Nadine Ulla", first);
     }
 
-    @Test @Order(214)
-    public void test_214_many_last_names() {
+    @Test @Order(314)
+    public void test_314_many_last_names() {
         final Customer khaled = new Customer("Saad-Abdelalim, Khaled Mohamed-Arif");
         String name = khaled.getName();
         String first = khaled.getFirstNames();
@@ -158,10 +158,10 @@ public class Customer_2_NamesTests {
     }
 
     /**
-     * Tests 220+ test handling of whitespaces.
+     * Tests 320+ test handling of whitespaces.
      */
-    @Test @Order(220)
-    public void test_220_spaces() {
+    @Test @Order(320)
+    public void test_320_spaces() {
         final Customer eric = new Customer(" Eric  Meyer   ");
         String name = eric.getName();
         String first = eric.getFirstNames();
@@ -170,8 +170,8 @@ public class Customer_2_NamesTests {
         assertEquals("Eric", first);
     }
 
-    @Test @Order(221)
-    public void test_221_quotes() {
+    @Test @Order(321)
+    public void test_321_quotes() {
         final Customer eric = new Customer(" 'Eric Meyer'  ");
         String name = eric.getName();
         String first = eric.getFirstNames();
@@ -180,8 +180,8 @@ public class Customer_2_NamesTests {
         assertEquals("Eric", first);
     }
 
-    @Test @Order(222)
-    public void test_222_double_quotes() {
+    @Test @Order(322)
+    public void test_322_double_quotes() {
         final Customer eric = new Customer(" \"Eric Meyer\"  ");
         String name = eric.getName();
         String first = eric.getFirstNames();
@@ -190,8 +190,8 @@ public class Customer_2_NamesTests {
         assertEquals("Eric", first);
     }
 
-    @Test @Order(223)
-    public void test_223_whitespaces() {
+    @Test @Order(323)
+    public void test_323_whitespaces() {
         final Customer nadine = new Customer("\t  Nadine  \t\t   Ulla     Blumenfeld  \t");
         String name = nadine.getName();
         String first = nadine.getFirstNames();
@@ -201,10 +201,10 @@ public class Customer_2_NamesTests {
     }
 
     /**
-     * Test 230 tests extremely long names.
+     * Test 330 tests extremely long names.
      */
-    @Test @Order(230)
-    public void test_230_extreme_long_names() {
+    @Test @Order(330)
+    public void test_330_extreme_long_names() {
         var auguste = new Customer("Auguste Viktoria Friederike Luise Feodora Jenny "
                 + "von-Schleswig-Holstein-Sonderburg-Augustenburg");
         String name = auguste.getName();

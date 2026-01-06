@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests that specify {@link Customer} contacts.
  */
-public class Customer_3_ContactsTests {
+public class Customer_2_ContactsTests {
 
     /*
      * Test object.
@@ -19,26 +19,26 @@ public class Customer_3_ContactsTests {
     /**
      * Test 010 validates the {@link Customer} contact initialization.
      */
-    @Test @Order(300)
-    public void test_300_contact_initialization() {
+    @Test @Order(200)
+    public void test_200_contact_initialization() {
         assertEquals("", eric.getContacts());
     }
 
     /**
-     * Test 310 validates a single contact.
+     * Test 210 validates a single contact.
      */
-    @Test @Order(310)
-    public void test_310_single_contact() {
+    @Test @Order(210)
+    public void test_210_single_contact() {
         eric.addContact("eme@gmail.com");
         assertEquals("eme@gmail.com", eric.getContacts());
         assertEquals("eme@gmail.com", eric.contact(0));
     }
 
     /**
-     * Test 320 validates a multiple contacts.
+     * Test 220 validates a multiple contacts.
      */
-    @Test @Order(320)
-    public void test_320_multiple_contacts() {
+    @Test @Order(220)
+    public void test_220_multiple_contacts() {
         eric.addContact("eme@gmail.com");
         eric.addContact("+49 030 515 141345");
         eric.addContact("fax: 030 234-134651");
@@ -48,8 +48,8 @@ public class Customer_3_ContactsTests {
         assertEquals("fax: 030 234-134651", eric.contact(2));
     }
 
-    @Order(321)
-    @Test public void test_321_multiple_contacts_list() {
+    @Order(221)
+    @Test public void test_221_multiple_contacts_list() {
         eric.addContact("eme@gmail.com");
         eric.addContact("+49 030 515 141345");
         eric.addContact("fax: 030 234-134651");
@@ -66,10 +66,10 @@ public class Customer_3_ContactsTests {
     }
 
     /**
-     * Test 330 contact out-of-bounds cases.
+     * Test 230 contact out-of-bounds cases.
      */
-    @Test @Order(330)
-    public void test_330_out_of_bounds_contacts() {
+    @Test @Order(230)
+    public void test_230_out_of_bounds_contacts() {
         eric.addContact("eme@gmail.com");
         eric.addContact("+49 030 515 141345");
         eric.addContact("fax: 030 234-134651");
