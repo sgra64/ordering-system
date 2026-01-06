@@ -1,7 +1,12 @@
 package datamodel;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Order;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.MethodOrderer;
 
 /**
  * Sanity tests define restrictions that must be implemented by the tested
@@ -11,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * in the test code. Then, the restriction must be implemented in the tested
  * class {@link Customer}.
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Customer_1_SanityTests {
 
     /*

@@ -1,13 +1,17 @@
 package datamodel;
 
-import java.util.Iterator;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Iterator;
 
 /**
  * Tests that specify {@link Customer} contacts.
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Customer_2_ContactsTests {
 
     /*

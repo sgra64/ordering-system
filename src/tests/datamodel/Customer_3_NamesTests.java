@@ -1,13 +1,18 @@
 package datamodel;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Order;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.MethodOrderer;
 
 /**
  * Names tests specify the acceptance of {@link Customer} names provided
  * as {@code single-String} names such as {@code "Eric Meyer"} or
  * {@code "Meyer, Eric"}.
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Customer_3_NamesTests {
 
     /**

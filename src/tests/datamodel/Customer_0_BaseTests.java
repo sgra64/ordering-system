@@ -1,11 +1,16 @@
 package datamodel;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Order;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.MethodOrderer;
 
 /**
  * Basic tests for class {@link Customer}.
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Customer_0_BaseTests {
 
     /*
