@@ -66,7 +66,6 @@ import datamodel.Order;
  * +------------+----------------------------+----------+------------------------+
  * </pre>
  */
-@Runnable.Accessors(priority=3)
 public class RunDatamodelDemo implements Runnable {
 
     /**
